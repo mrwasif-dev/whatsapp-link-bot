@@ -1,0 +1,12 @@
+{
+  "name": "whatsapp-link-bot",
+  "version": "1.0.0",
+  "main": "whatsapp.js",
+  "scripts": {
+    "start": "node whatsapp.js"
+  },
+  "dependencies": {
+    "@whiskeysockets/baileys": "^7.0.0-rc.9",
+    "qrcode-terminal": "^0.12.0"
+  }
+}
