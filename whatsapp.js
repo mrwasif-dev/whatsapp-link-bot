@@ -22,10 +22,18 @@ async function startWhatsApp () {
     }
 
     if (connection === 'close') {
-      console.log('❌ Disconnected')
+      console.log('❌ Disconnected, reconnecting...')
       startWhatsApp()
     }
   })
+
+  return sock
 }
 
-startWhatsApp()
+// 🔴 یہی نئی لائن ہے (MOST IMPORTANT)
+module.exports = startWhatsApp
+
+// local test کے لیے
+if (require.main === module) {
+  startWhatsApp()
+}
