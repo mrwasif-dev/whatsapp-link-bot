@@ -15,25 +15,21 @@ async function startWhatsApp () {
   sock.ev.on('creds.update', saveCreds)
 
   sock.ev.on('connection.update', (update) => {
-    const { connection } = update
+    const { connection, lastDisconnect } = update
 
     if (connection === 'open') {
       console.log('✅ WhatsApp CONNECTED & LINKED')
     }
 
     if (connection === 'close') {
-      console.log('❌ Disconnected, reconnecting...')
-      startWhatsApp()
+      const reason = lastDisconnect?.error?.output?.statusCode
+      if (reason !== DisconnectReason.loggedOut) {
+        startWhatsApp()
+      } else {
+        console.log('❌ Logged out, QR required again')
+      }
     }
   })
-
-  return sock
 }
 
-// 🔴 یہی نئی لائن ہے (MOST IMPORTANT)
-module.exports = startWhatsApp
-
-// local test کے لیے
-if (require.main === module) {
-  startWhatsApp()
-}
+startWhatsApp()
